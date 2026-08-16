@@ -132,10 +132,31 @@
     var hitBoost = 1.18;
     var maxSpeed = 260;
 
+    function setPointerFromEvent(event) {
+      if (!event) return;
+      var clientX = event.clientX;
+      var clientY = event.clientY;
+      if (typeof clientX !== "number" || typeof clientY !== "number") {
+        if (event.touches && event.touches[0]) {
+          clientX = event.touches[0].clientX;
+          clientY = event.touches[0].clientY;
+        }
+      }
+      if (typeof clientX === "number" && typeof clientY === "number") {
+        pointer.x = clientX;
+        pointer.y = clientY;
+      }
+    }
+
     window.addEventListener("pointermove", function (e) {
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
+      setPointerFromEvent(e);
     });
+    window.addEventListener("pointerdown", function (e) {
+      setPointerFromEvent(e);
+    });
+    window.addEventListener("touchstart", function (e) {
+      setPointerFromEvent(e);
+    }, { passive: true });
     document.addEventListener("mouseleave", function () {
       pointer.x = -9999;
       pointer.y = -9999;
