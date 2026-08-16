@@ -1,7 +1,4 @@
 const { list, put } = require('@vercel/blob');
-const fs = require('fs');
-const path = require('path');
-
 const fallback = require('../content/site.json');
 
 async function getLiveContent() {
@@ -52,21 +49,26 @@ module.exports = async function (req, res) {
       return res.status(400).json({ ok: false, error: 'Missing content payload.' });
     }
 
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
-      try {
-        const blob = await put('site-content.json', JSON.stringify(body, null, 2), {
-          access: 'public',
-          contentType: 'application/json'
-        });
-        return res.status(200).json({ ok: true, url: blob.url });
-      } catch (error) {
-        console.error('Failed to save content to blob storage:', error);
-      }
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      return res.status(500).json({
+        ok: false,
+        error: 'Blob storage is not configured. Add BLOB_READ_WRITE_TOKEN in Vercel.'
+      });
     }
 
-    const filePath = path.join(__dirname, '..', 'content', 'site.json');
-    fs.writeFileSync(filePath, JSON.stringify(body, null, 2));
-    return res.status(200).json({ ok: true, localFallback: true });
+    try {
+      const blob = await put('site-content.json', JSON.stringify(body, null, 2), {
+        access: 'public',
+        contentType: 'application/json'
+      });
+      return res.status(200).json({ ok: true, url: blob.url });
+    } catch (error) {
+      console.error('Failed to save content to blob storage:', error);
+      return res.status(500).json({
+        ok: false,
+        error: error && error.message ? error.message : 'Unable to save content to blob storage.'
+      });
+    }
   }
 
   return res.status(405).json({ ok: false, error: 'Method not allowed.' });
