@@ -47,7 +47,8 @@ module.exports = async function (req, res) {
     const fileName = 'uploads/' + Date.now() + '-' + (file.originalFilename || file.name || 'upload');
     const blob = await put(fileName, buffer, {
       access: 'public',
-      contentType: file.mimetype || file.type || 'application/octet-stream'
+      contentType: file.mimetype || file.type || 'application/octet-stream',
+      addRandomSuffix: true
     });
 
     return res.status(200).json({ ok: true, url: blob.url });

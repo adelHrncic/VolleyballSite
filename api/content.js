@@ -59,7 +59,8 @@ module.exports = async function (req, res) {
     try {
       const blob = await put('site-content.json', JSON.stringify(body, null, 2), {
         access: 'public',
-        contentType: 'application/json'
+        contentType: 'application/json',
+        allowOverwrite: true
       });
       return res.status(200).json({ ok: true, url: blob.url });
     } catch (error) {
