@@ -10,6 +10,13 @@ module.exports = async function (req, res) {
   const form = new IncomingForm({ keepExtensions: true, multiples: false });
 
   try {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      return res.status(500).json({
+        ok: false,
+        error: 'Upload storage is not configured. Add BLOB_READ_WRITE_TOKEN in Vercel.'
+      });
+    }
+
     const result = await new Promise(function (resolve, reject) {
       form.parse(req, function (error, fields, files) {
         if (error) {
@@ -37,6 +44,9 @@ module.exports = async function (req, res) {
     return res.status(200).json({ ok: true, url: blob.url });
   } catch (error) {
     console.error('File upload failed:', error);
-    return res.status(500).json({ ok: false, error: 'File upload failed.' });
+    return res.status(500).json({
+      ok: false,
+      error: error && error.message ? error.message : 'File upload failed.'
+    });
   }
 };

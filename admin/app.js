@@ -302,6 +302,24 @@
     return fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
   }
 
+  async function parseJsonResponse(response) {
+    var contentType = response.headers.get("content-type") || "";
+    if (contentType.indexOf("application/json") !== -1) {
+      return response.json();
+    }
+
+    var text = await response.text();
+    if (!text) {
+      return {};
+    }
+
+    try {
+      return JSON.parse(text);
+    } catch (error) {
+      throw new Error(text.replace(/\s+/g, " ").substring(0, 180) || "Request failed.");
+    }
+  }
+
   async function uploadMediaFile(file, targetName) {
     var status = document.getElementById("saveMessage");
     if (!file) {
@@ -321,7 +339,7 @@
         method: "POST",
         body: formData
       });
-      var result = await response.json();
+      var result = await parseJsonResponse(response);
 
       if (!response.ok || !result.ok) {
         throw new Error(result.error || "Upload failed.");
@@ -359,7 +377,7 @@
       body: JSON.stringify(data)
     });
 
-    var result = await response.json();
+    var result = await parseJsonResponse(response);
     if (!response.ok || !result.ok) {
       throw new Error(result.error || "Save failed.");
     }
@@ -381,7 +399,7 @@
         body: JSON.stringify({ username: username, password: password })
       });
 
-      var result = await response.json();
+      var result = await parseJsonResponse(response);
       if (!response.ok || !result.ok) {
         throw new Error(result.error || "Login failed.");
       }
