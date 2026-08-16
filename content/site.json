@@ -1,0 +1,53 @@
+{
+  "brandName": "[ TEAM NAME ]",
+  "heroKicker": "// [ LEAGUE PLACEHOLDER ] • EST. [ YYYY ]",
+  "heroTitleLine1": "[ TEAM ]",
+  "heroTitleLine2": "[ NAME ]",
+  "heroTagline": "[ Tagline placeholder goes here ]",
+  "signupTitle": "[ Join The Newsletter ]",
+  "signupDescription": "[ Newsletter signup description placeholder — updates on games, tryouts and events. ]",
+  "signupSuccess": "[ Placeholder success message ]",
+  "aboutTitle": "[ About Us ]",
+  "aboutDescription": "[ About us paragraph placeholder — team history, mission, and values go here. ]",
+  "galleryTitle": "[ Gallery ]",
+  "galleryDescription": "[ Gallery description placeholder — photos from matches, training and events. ]",
+  "faqTitle": "[ FAQs ]",
+  "faqIntro": "[ FAQ intro placeholder text. ]",
+  "faqItems": [
+    { "question": "[ Question placeholder one? ]", "answer": "[ Answer placeholder text goes here. ]" },
+    { "question": "[ Question placeholder two? ]", "answer": "[ Answer placeholder text goes here. ]" },
+    { "question": "[ Question placeholder three? ]", "answer": "[ Answer placeholder text goes here. ]" },
+    { "question": "[ Question placeholder four? ]", "answer": "[ Answer placeholder text goes here. ]" },
+    { "question": "[ Question placeholder five? ]", "answer": "[ Answer placeholder text goes here. ]" }
+  ],
+  "contactTitle": "[ Contact ]",
+  "contactDescription": "[ Contact intro placeholder text. ]",
+  "email": "[ email@placeholder.com ]",
+  "phone": "[ (000) 000-0000 ]",
+  "homeCourt": "[ Venue / Address Placeholder ]",
+  "practice": "[ Days / Times Placeholder ]",
+  "socials": [
+    { "label": "[ Instagram ]", "url": "#" },
+    { "label": "[ Facebook ]", "url": "#" },
+    { "label": "[ TikTok ]", "url": "#" }
+  ],
+  "footerName": "[ TEAM NAME ]",
+  "footerCopy": "[ © YYYY Team Name Placeholder. All rights reserved. ]",
+  "teamMembers": [
+    { "name": "[ Player Name ]", "role": "[ Position / No. ]", "bio": "[ Mini bio placeholder text goes here. ]", "photo": "img/volleyball.png" },
+    { "name": "[ Player Name ]", "role": "[ Position / No. ]", "bio": "[ Mini bio placeholder text goes here. ]", "photo": "img/volleyball.png" },
+    { "name": "[ Player Name ]", "role": "[ Position / No. ]", "bio": "[ Mini bio placeholder text goes here. ]", "photo": "img/volleyball.png" },
+    { "name": "[ Player Name ]", "role": "[ Position / No. ]", "bio": "[ Mini bio placeholder text goes here. ]", "photo": "img/volleyball.png" },
+    { "name": "[ Player Name ]", "role": "[ Position / No. ]", "bio": "[ Mini bio placeholder text goes here. ]", "photo": "img/volleyball.png" },
+    { "name": "[ Player Name ]", "role": "[ Position / No. ]", "bio": "[ Mini bio placeholder text goes here. ]", "photo": "img/volleyball.png" }
+  ],
+  "galleryImages": [
+    { "src": "img/volleyball.png", "alt": "[ Image ]" },
+    { "src": "img/volleyball.png", "alt": "[ Image ]" },
+    { "src": "img/volleyball.png", "alt": "[ Image ]" },
+    { "src": "img/volleyball.png", "alt": "[ Image ]" },
+    { "src": "img/volleyball.png", "alt": "[ Image ]" },
+    { "src": "img/volleyball.png", "alt": "[ Image ]" },
+    { "src": "img/volleyball.png", "alt": "[ Image ]" }
+  ]
+}

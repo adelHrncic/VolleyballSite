@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[ TEAM NAME ]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <img src="img/volleyball.png" alt="" draggable="false" class="volleyball-photo volleyball-photo--spin brand-mark" aria-hidden="true">
+      <span class="sr-only">[ Logo ]</span>
+      <span class="brand-name">[ TEAM&nbsp;NAME ]</span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#about" class="nav-link"><span>01</span>About</a>
+      <a href="#gallery" class="nav-link"><span>02</span>Gallery</a>
+      <a href="#faq" class="nav-link"><span>03</span>FAQ</a>
+      <a href="#contact" class="nav-link"><span>04</span>Contact</a>
+      <a href="admin/" class="nav-link admin-link">Admin</a>
+      <a href="#signup" class="nav-link nav-cta">Join Our Newsletter</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-court" aria-hidden="true">
+      <div class="court-line line-center"></div>
+      <div class="court-line line-attack-l"></div>
+      <div class="court-line line-attack-r"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-kicker">// [ LEAGUE PLACEHOLDER ] &nbsp;—&nbsp; EST. [ YYYY ]</p>
+      <h1 class="hero-title">
+        <span>[ TEAM ]</span>
+        <span>[ NAME ]</span>
+      </h1>
+      <p class="hero-tagline">[ Tagline placeholder goes here ]</p>
+      <div class="hero-actions">
+        <a href="#signup" class="btn btn-solid">Join The Newsletter</a>
+        <a href="#gallery" class="btn btn-outline">See The Gallery</a>
+      </div>
+    </div>
+    <a href="#signup" class="scroll-cue" aria-hidden="true">
+      <span>SCROLL</span>
+      <i></i>
+    </a>
+  </section>
+
+  <!-- divider: SERVE ARC -->
+  <div class="divider divider-serve" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" class="divider-shape">
+      <path d="M0,140 L0,90 C 360,10 1080,10 1440,90 L1440,140 Z"></path>
+    </svg>
+    <svg class="divider-motif" viewBox="0 0 1440 140" preserveAspectRatio="none">
+      <path id="servePath" class="motif-path" d="M40,120 C 400,20 1040,20 1400,120"></path>
+    </svg>
+    <img src="img/volleyball.png" alt="" draggable="false" class="divider-ball divider-ball--physics" data-ball="serve" aria-hidden="true">
+  </div>
+
+  <!-- ============ SIGNUP / NEWSLETTER ============ -->
+  <section class="signup" id="signup">
+    <div class="volleyball volleyball--float volleyball--drift section-orb orb-signup" aria-hidden="true"></div>
+    <div class="section-inner signup-inner">
+      <div class="signup-copy">
+        <p class="eyebrow"><svg class="seam-icon" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,8 C10,-2 14,18 22,8 C28,0 32,14 38,6"></path></svg>Roster Call</p>
+        <h2 class="section-title">[ Join The Newsletter ]</h2>
+        <p class="section-desc">[ Newsletter signup description placeholder — updates on games, tryouts and events. ]</p>
+      </div>
+      <form class="signup-form" id="signupForm">
+        <div class="form-row">
+          <label for="signupName" class="sr-only">Name</label>
+          <input type="text" id="signupName" name="name" placeholder="[ Your Name ]" required>
+        </div>
+        <div class="form-row">
+          <label for="signupEmail" class="sr-only">Email</label>
+          <input type="email" id="signupEmail" name="email" placeholder="[ Your Email ]" required>
+        </div>
+        <button type="submit" class="btn btn-solid btn-block">
+          <span>Join Our Newsletter!</span>
+        </button>
+       
+        <p class="form-success" id="signupSuccess" role="status">[ Placeholder success message ]</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- divider: NET MESH -->
+  <div class="divider divider-net" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" class="divider-shape">
+      <path d="M0,0 L1440,0 L1440,60 L0,110 Z"></path>
+    </svg>
+    <div class="net-tape net-tape-top"></div>
+    <svg class="divider-motif net-mesh" viewBox="0 0 1440 140" preserveAspectRatio="none">
+      <g class="mesh-lines"></g>
+    </svg>
+    <div class="net-tape net-tape-bottom"></div>
+    <img src="img/volleyball.png" alt="" draggable="false" class="divider-ball divider-ball--net" aria-hidden="true">
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="about" id="about">
+    <div class="volleyball volleyball--float volleyball--drift section-orb orb-about" aria-hidden="true"></div>
+    <div class="section-inner">
+      <p class="eyebrow"><svg class="seam-icon" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,8 C10,-2 14,18 22,8 C28,0 32,14 38,6"></path></svg>The Roster</p>
+      <h2 class="section-title">[ About Us ]</h2>
+      <p class="section-desc">[ About us paragraph placeholder — team history, mission, and values go here. ]</p>
+
+      <div class="player-grid">
+        <!-- Player card x6 -->
+        <article class="player-card">
+          <div class="player-photo">
+            <span>[ Photo ]</span>
+            <span class="volleyball card-ball" aria-hidden="true"></span>
+          </div>
+          <h3 class="player-name">[ Player Name ]</h3>
+          <p class="player-role">[ Position / No. ]</p>
+          <p class="player-bio">[ Mini bio placeholder text goes here. ]</p>
+        </article>
+        <article class="player-card">
+          <div class="player-photo">
+            <span>[ Photo ]</span>
+            <span class="volleyball card-ball" aria-hidden="true"></span>
+          </div>
+          <h3 class="player-name">[ Player Name ]</h3>
+          <p class="player-role">[ Position / No. ]</p>
+          <p class="player-bio">[ Mini bio placeholder text goes here. ]</p>
+        </article>
+        <article class="player-card">
+          <div class="player-photo">
+            <span>[ Photo ]</span>
+            <span class="volleyball card-ball" aria-hidden="true"></span>
+          </div>
+          <h3 class="player-name">[ Player Name ]</h3>
+          <p class="player-role">[ Position / No. ]</p>
+          <p class="player-bio">[ Mini bio placeholder text goes here. ]</p>
+        </article>
+        <article class="player-card">
+          <div class="player-photo">
+            <span>[ Photo ]</span>
+            <span class="volleyball card-ball" aria-hidden="true"></span>
+          </div>
+          <h3 class="player-name">[ Player Name ]</h3>
+          <p class="player-role">[ Position / No. ]</p>
+          <p class="player-bio">[ Mini bio placeholder text goes here. ]</p>
+        </article>
+        <article class="player-card">
+          <div class="player-photo">
+            <span>[ Photo ]</span>
+            <span class="volleyball card-ball" aria-hidden="true"></span>
+          </div>
+          <h3 class="player-name">[ Player Name ]</h3>
+          <p class="player-role">[ Position / No. ]</p>
+          <p class="player-bio">[ Mini bio placeholder text goes here. ]</p>
+        </article>
+        <article class="player-card">
+          <div class="player-photo">
+            <span>[ Photo ]</span>
+            <span class="volleyball card-ball" aria-hidden="true"></span>
+          </div>
+          <h3 class="player-name">[ Player Name ]</h3>
+          <p class="player-role">[ Position / No. ]</p>
+          <p class="player-bio">[ Mini bio placeholder text goes here. ]</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- divider: COURT SIDELINES -->
+  <div class="divider divider-sidelines" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" class="divider-shape">
+      <path d="M0,140 L0,50 L480,110 L960,20 L1440,90 L1440,140 Z"></path>
+    </svg>
+    <div class="sideline-stripes">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <img src="img/volleyball.png" alt="" draggable="false" class="divider-ball divider-ball--physics" data-ball="sideline" aria-hidden="true">
+  </div>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery" id="gallery">
+    <div class="volleyball volleyball--float volleyball--drift section-orb orb-gallery" aria-hidden="true"></div>
+    <div class="section-inner">
+      <p class="eyebrow"><svg class="seam-icon" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,8 C10,-2 14,18 22,8 C28,0 32,14 38,6"></path></svg>Game Day</p>
+      <h2 class="section-title">[ Gallery ]</h2>
+      <p class="section-desc">[ Gallery description placeholder — photos from matches, training and events. ]</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item span-2"><span>[ Image ]</span></div>
+        <div class="gallery-item"><span>[ Image ]</span></div>
+        <div class="gallery-item"><span>[ Image ]</span></div>
+        <div class="gallery-item"><span>[ Image ]</span></div>
+        <div class="gallery-item span-2"><span>[ Image ]</span></div>
+        <div class="gallery-item"><span>[ Image ]</span></div>
+        <div class="gallery-item"><span>[ Image ]</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- divider: SEAM STITCH -->
+  <div class="divider divider-seam" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" class="divider-shape">
+      <path d="M0,0 L1440,0 L1440,80 C 1080,140 360,140 0,80 Z"></path>
+    </svg>
+    <svg class="divider-motif" viewBox="0 0 1440 140" preserveAspectRatio="none">
+      <path class="seam-path" d="M0,50 C 240,110 300,-10 480,50 C 660,110 780,-10 960,50 C 1140,110 1200,-10 1440,50"></path>
+    </svg>
+    <img src="img/volleyball.png" alt="" draggable="false" class="divider-ball divider-ball--physics" data-ball="seam" aria-hidden="true">
+  </div>
+
+  <!-- ============ FAQ ============ -->
+  <section class="faq" id="faq">
+    <div class="volleyball volleyball--float volleyball--drift section-orb orb-faq" aria-hidden="true"></div>
+    <div class="section-inner">
+      <p class="eyebrow"><svg class="seam-icon" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,8 C10,-2 14,18 22,8 C28,0 32,14 38,6"></path></svg>Know The Rules</p>
+      <h2 class="section-title">[ FAQs ]</h2>
+      <p class="section-desc">[ FAQ intro placeholder text. ]</p>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="volleyball faq-ball" aria-hidden="true"></i>[ Question placeholder one? ]</span>
+            <i class="faq-icon"></i>
+          </button>
+          <div class="faq-answer"><p>[ Answer placeholder text goes here. ]</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="volleyball faq-ball" aria-hidden="true"></i>[ Question placeholder two? ]</span>
+            <i class="faq-icon"></i>
+          </button>
+          <div class="faq-answer"><p>[ Answer placeholder text goes here. ]</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="volleyball faq-ball" aria-hidden="true"></i>[ Question placeholder three? ]</span>
+            <i class="faq-icon"></i>
+          </button>
+          <div class="faq-answer"><p>[ Answer placeholder text goes here. ]</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="volleyball faq-ball" aria-hidden="true"></i>[ Question placeholder four? ]</span>
+            <i class="faq-icon"></i>
+          </button>
+          <div class="faq-answer"><p>[ Answer placeholder text goes here. ]</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span><i class="volleyball faq-ball" aria-hidden="true"></i>[ Question placeholder five? ]</span>
+            <i class="faq-icon"></i>
+          </button>
+          <div class="faq-answer"><p>[ Answer placeholder text goes here. ]</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- divider: RALLY ZIGZAG -->
+  <div class="divider divider-rally" aria-hidden="true">
+    <svg viewBox="0 0 1440 140" preserveAspectRatio="none" class="divider-shape">
+      <path d="M0,140 L0,70 L1440,20 L1440,140 Z"></path>
+    </svg>
+    <svg class="divider-motif" viewBox="0 0 1440 140" preserveAspectRatio="none">
+      <polyline class="rally-path" points="20,110 220,30 420,100 620,25 820,105 1020,20 1220,95 1420,35"></polyline>
+      <circle class="rally-dot" cx="20" cy="110" r="7"></circle>
+      <circle class="rally-dot" cx="420" cy="100" r="7"></circle>
+      <circle class="rally-dot" cx="820" cy="105" r="7"></circle>
+      <circle class="rally-dot" cx="1220" cy="95" r="7"></circle>
+    </svg>
+    <img src="img/volleyball.png" alt="" draggable="false" class="divider-ball divider-ball--physics" data-ball="rally" aria-hidden="true">
+  </div>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="volleyball volleyball--float volleyball--drift section-orb orb-contact" aria-hidden="true"></div>
+    <div class="section-inner contact-inner">
+      <div class="contact-info">
+        <p class="eyebrow"><svg class="seam-icon" viewBox="0 0 40 16" aria-hidden="true"><path d="M2,8 C10,-2 14,18 22,8 C28,0 32,14 38,6"></path></svg>Get In Touch</p>
+        <h2 class="section-title">[ Contact ]</h2>
+        <p class="section-desc">[ Contact intro placeholder text. ]</p>
+        <ul class="info-list">
+          <li><span class="info-label">Email</span><span class="info-value">[ email@placeholder.com ]</span></li>
+          <li><span class="info-label">Phone</span><span class="info-value">[ (000) 000-0000 ]</span></li>
+          <li><span class="info-label">Home Court</span><span class="info-value">[ Venue / Address Placeholder ]</span></li>
+          <li><span class="info-label">Practice</span><span class="info-value">[ Days / Times Placeholder ]</span></li>
+        </ul>
+        <div class="social-row">
+          <a href="#" class="social-pill">[ Instagram ]</a>
+          <a href="#" class="social-pill">[ Facebook ]</a>
+          <a href="#" class="social-pill">[ TikTok ]</a>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <label for="contactName" class="sr-only">Name</label>
+          <input type="text" id="contactName" name="name" placeholder="[ Your Name ]" required>
+        </div>
+        <div class="form-row">
+          <label for="contactEmail" class="sr-only">Email</label>
+          <input type="email" id="contactEmail" name="email" placeholder="[ Your Email ]" required>
+        </div>
+        <div class="form-row">
+          <label for="contactMsg" class="sr-only">Message</label>
+          <textarea id="contactMsg" name="message" rows="5" placeholder="[ Your Message ]" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid btn-block">
+          <span>Send It</span>
+        </button>
+        <p class="form-success" id="contactSuccess" role="status">[ Placeholder success message ]</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="img/volleyball.png" alt="" draggable="false" class="volleyball-photo volleyball-photo--spin brand-mark" aria-hidden="true">
+      <span class="sr-only">[ Logo ]</span>
+      <p class="footer-name">[ TEAM NAME ]</p>
+      <p class="footer-copy">[ © YYYY Team Name Placeholder. All rights reserved. ]</p>
+      <a href="#top" class="back-to-top">BACK TO TOP ↑</a>
+    </div>
+  </footer>
+
+</main>
+
+<script src="js/site-content.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

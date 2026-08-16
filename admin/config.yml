@@ -1,0 +1,61 @@
+backend:
+  name: github
+  repo: adelHrncic/VolleyballSite
+  branch: main
+
+site_url: https://your-site-url.netlify.app
+display_url: https://your-site-url.netlify.app
+media_folder: "img/uploads"
+public_folder: "/img/uploads"
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - file: "content/site.json"
+        label: "Site Content"
+        name: "site"
+        format: "json"
+        fields:
+          - { label: "Brand Name", name: "brandName", widget: "string" }
+          - { label: "Hero Kicker", name: "heroKicker", widget: "string" }
+          - { label: "Hero Title Line 1", name: "heroTitleLine1", widget: "string" }
+          - { label: "Hero Title Line 2", name: "heroTitleLine2", widget: "string" }
+          - { label: "Hero Tagline", name: "heroTagline", widget: "text" }
+          - { label: "Signup Title", name: "signupTitle", widget: "string" }
+          - { label: "Signup Description", name: "signupDescription", widget: "text" }
+          - { label: "Signup Success Message", name: "signupSuccess", widget: "string" }
+          - { label: "About Title", name: "aboutTitle", widget: "string" }
+          - { label: "About Description", name: "aboutDescription", widget: "text" }
+          - { label: "Gallery Title", name: "galleryTitle", widget: "string" }
+          - { label: "Gallery Description", name: "galleryDescription", widget: "text" }
+          - { label: "FAQ Title", name: "faqTitle", widget: "string" }
+          - { label: "FAQ Intro", name: "faqIntro", widget: "text" }
+          - { label: "Contact Title", name: "contactTitle", widget: "string" }
+          - { label: "Contact Description", name: "contactDescription", widget: "text" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Home Court", name: "homeCourt", widget: "string" }
+          - { label: "Practice Info", name: "practice", widget: "string" }
+          - { label: "Footer Name", name: "footerName", widget: "string" }
+          - { label: "Footer Copy", name: "footerCopy", widget: "string" }
+          - label: "Team Members"
+            name: "teamMembers"
+            widget: list
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Bio", name: "bio", widget: "text" }
+              - { label: "Photo", name: "photo", widget: "image", choose_url: true }
+          - label: "Gallery Images"
+            name: "galleryImages"
+            widget: list
+            fields:
+              - { label: "Image", name: "src", widget: "image", choose_url: true }
+              - { label: "Alt Text", name: "alt", widget: "string" }
+          - label: "FAQ Items"
+            name: "faqItems"
+            widget: list
+            fields:
+              - { label: "Question", name: "question", widget: "string" }
+              - { label: "Answer", name: "answer", widget: "text" }
