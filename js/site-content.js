@@ -36,14 +36,25 @@
       var roleEl = card.querySelector(".player-role");
       var bioEl = card.querySelector(".player-bio");
       var photoEl = card.querySelector(".player-photo");
+      var placeholderEl = photoEl ? photoEl.querySelector("span") : null;
 
       if (nameEl) nameEl.textContent = member.name || "[ Player Name ]";
       if (roleEl) roleEl.textContent = member.role || "[ Position / No. ]";
       if (bioEl) bioEl.textContent = member.bio || "[ Mini bio placeholder text goes here. ]";
-      if (photoEl && member.photo) {
-        photoEl.style.backgroundImage = "linear-gradient(rgba(5,9,20,0.18), rgba(5,9,20,0.25)), url('" + member.photo + "')";
-        photoEl.style.backgroundSize = "cover";
-        photoEl.style.backgroundPosition = "center";
+      if (photoEl) {
+        if (member.photo) {
+          photoEl.style.backgroundImage = "linear-gradient(rgba(5,9,20,0.18), rgba(5,9,20,0.25)), url('" + member.photo + "')";
+          photoEl.style.backgroundSize = "cover";
+          photoEl.style.backgroundPosition = "center";
+          photoEl.style.backgroundRepeat = "no-repeat";
+          if (placeholderEl) placeholderEl.style.display = "none";
+        } else {
+          photoEl.style.backgroundImage = "";
+          photoEl.style.backgroundSize = "";
+          photoEl.style.backgroundPosition = "";
+          photoEl.style.backgroundRepeat = "";
+          if (placeholderEl) placeholderEl.style.display = "block";
+        }
       }
     });
   }
