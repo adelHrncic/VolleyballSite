@@ -28,7 +28,8 @@ module.exports = async function (req, res) {
       });
     });
 
-    const file = result.files.file || result.files.image || result.files.video || Object.values(result.files)[0];
+    const rawFile = result.files.file || result.files.image || result.files.video || Object.values(result.files)[0];
+    const file = Array.isArray(rawFile) ? rawFile[0] : rawFile;
 
     if (!file) {
       return res.status(400).json({ ok: false, error: 'No file was uploaded.' });
