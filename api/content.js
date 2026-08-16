@@ -64,9 +64,15 @@ module.exports = async function (req, res) {
       return res.status(200).json({ ok: true, url: blob.url });
     } catch (error) {
       console.error('Failed to save content to blob storage:', error);
+
+      const message = error && error.message ? error.message : 'Unable to save content to blob storage.';
+      const friendlyMessage = message.indexOf('public access on a private store') !== -1
+        ? 'This Blob store is configured as private. Change the Blob store to Public in Vercel, or switch this app to a private signed-download flow.'
+        : message;
+
       return res.status(500).json({
         ok: false,
-        error: error && error.message ? error.message : 'Unable to save content to blob storage.'
+        error: friendlyMessage
       });
     }
   }

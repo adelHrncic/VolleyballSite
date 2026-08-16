@@ -53,9 +53,15 @@ module.exports = async function (req, res) {
     return res.status(200).json({ ok: true, url: blob.url });
   } catch (error) {
     console.error('File upload failed:', error);
+
+    const message = error && error.message ? error.message : 'File upload failed.';
+    const friendlyMessage = message.indexOf('public access on a private store') !== -1
+      ? 'This Blob store is set to private. Change it to Public in Vercel Blob settings, or use a private-store signed URL flow.'
+      : message;
+
     return res.status(500).json({
       ok: false,
-      error: error && error.message ? error.message : 'File upload failed.'
+      error: friendlyMessage
     });
   }
 };
