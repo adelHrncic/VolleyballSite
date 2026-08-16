@@ -7,11 +7,13 @@
     <style>
       :root {
         --bg: #050914;
-        --panel: #0f172a;
+        --panel: #111827;
+        --panel-soft: #172033;
         --line: rgba(255,255,255,0.12);
         --accent: #3d5bff;
         --text: #ecf3ff;
         --muted: #b7c7e6;
+        --success: #7ef0b8;
       }
       * { box-sizing: border-box; }
       body {
@@ -20,22 +22,27 @@
         font-family: Arial, Helvetica, sans-serif;
         background: radial-gradient(circle at top, #142447 0%, var(--bg) 60%);
         color: var(--text);
-        display: grid;
-        place-items: center;
         padding: 2rem;
       }
+      a { color: inherit; text-decoration: none; }
       .admin-shell {
-        width: min(460px, 100%);
+        max-width: 1100px;
+        margin: 0 auto;
         border: 1px solid var(--line);
-        background: rgba(15, 23, 42, 0.92);
-        box-shadow: 0 24px 70px rgba(0,0,0,0.35);
-        padding: 2rem;
+        background: rgba(17, 24, 39, 0.9);
+        box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--line);
       }
       .brand {
         display: flex;
         align-items: center;
-        gap: 0.8rem;
-        margin-bottom: 1.5rem;
+        gap: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
@@ -46,40 +53,308 @@
         border-radius: 50%;
         background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.7), rgba(255,255,255,0) 40%), #3d5bff;
       }
-      p {
+      .topbar nav {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .topbar a,
+      .topbar button {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--text);
+        padding: 0.6rem 0.9rem;
+        cursor: pointer;
+      }
+      .topbar button:hover,
+      .topbar a:hover { background: rgba(255,255,255,0.04); }
+      .panel {
+        padding: 1.5rem;
+      }
+      .login-box,
+      .editor-box {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--line);
+        padding: 1.5rem;
+      }
+      .login-box {
+        max-width: 420px;
+        margin: 2rem auto;
+      }
+      .login-box h1,
+      .editor-box h1 {
         margin: 0 0 1rem;
+        font-size: 1.4rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .muted {
         color: var(--muted);
         line-height: 1.6;
+        margin: 0 0 1rem;
       }
-      .link-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 1.5rem;
-        font-size: 0.9rem;
+      form {
+        display: grid;
+        gap: 1rem;
       }
-      a {
+      label {
+        display: grid;
+        gap: 0.45rem;
+        font-size: 0.82rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      input, textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.02);
         color: var(--text);
-        text-decoration: none;
+        padding: 0.8rem 0.9rem;
+        font: inherit;
       }
-      a:hover { text-decoration: underline; }
+      textarea { min-height: 110px; resize: vertical; }
+      .two-col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+      .inline-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      button[type="submit"],
+      .primary {
+        background: var(--accent);
+        border: 1px solid var(--accent);
+        color: white;
+        padding: 0.8rem 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .secondary {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--text);
+        padding: 0.8rem 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .status {
+        min-height: 1.2rem;
+        font-size: 0.85rem;
+        color: var(--success);
+      }
+      .status.error {
+        color: #ff8d8d;
+      }
+      [hidden] { display: none !important; }
+      .section-header {
+        margin: 1.25rem 0 0.75rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+      @media (max-width: 760px) {
+        .two-col { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
   <body>
     <div class="admin-shell">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Site Admin</span>
+      <div class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Site Admin</span>
+        </div>
+        <nav>
+          <a href="../">View Site</a>
+          <button type="button" id="logoutButton" hidden>Log Out</button>
+        </nav>
       </div>
-      <p>This editor is powered by Decap CMS. Sign in with GitHub to update the site content, rewrite copy, and upload new images without touching the code.</p>
-      <p>Changes are committed directly to the repository, and your host rebuilds from there.</p>
-      <div id="nc-root"></div>
-      <div class="link-row">
-        <a href="../">Back to site</a>
-        <a href="https://decapcms.org/docs/intro/" target="_blank" rel="noreferrer">Decap docs</a>
+
+      <div class="panel">
+        <div id="loginView" class="login-box">
+          <h1>Admin Login</h1>
+          <p class="muted">Use the hardcoded client credentials to update the site content and media.</p>
+          <form id="loginForm">
+            <label>
+              Username
+              <input type="text" name="username" autocomplete="username" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" autocomplete="current-password" required />
+            </label>
+            <button type="submit" class="primary">Log In</button>
+            <div id="loginMessage" class="status error" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <div id="editorView" class="editor-box" hidden>
+          <h1>Content Editor</h1>
+          <p class="muted">Update the site text, image URLs, and background video. Save changes and refresh the homepage to preview them.</p>
+
+          <form id="editorForm">
+            <div class="section-header">Header</div>
+            <div class="field-grid">
+              <label>Brand Name<input type="text" name="brandName"></label>
+              <label>Hero Kicker<input type="text" name="heroKicker"></label>
+              <label>Hero Title Line 1<input type="text" name="heroTitleLine1"></label>
+              <label>Hero Title Line 2<input type="text" name="heroTitleLine2"></label>
+              <label class="two-col" style="grid-column: 1 / -1;">Hero Tagline<textarea name="heroTagline"></textarea></label>
+              <label style="grid-column: 1 / -1;">Background Video URL <small style="letter-spacing: normal; text-transform: none; color: var(--muted);">Use a small MP4 URL or a direct file link for a faint, looping background clip.</small><input type="text" name="heroVideoUrl" placeholder="https://example.com/video.mp4"></label>
+              <label>Upload media to selected field<input id="mediaUpload" type="file" accept="image/*,video/*"></label>
+              <label>Upload target<select id="mediaTarget">
+                <option value="heroVideoUrl">Hero video</option>
+                <option value="player1Photo">Player 1 photo</option>
+                <option value="player2Photo">Player 2 photo</option>
+                <option value="player3Photo">Player 3 photo</option>
+                <option value="player4Photo">Player 4 photo</option>
+                <option value="player5Photo">Player 5 photo</option>
+                <option value="player6Photo">Player 6 photo</option>
+                <option value="gallery1Src">Gallery 1 image</option>
+                <option value="gallery2Src">Gallery 2 image</option>
+                <option value="gallery3Src">Gallery 3 image</option>
+                <option value="gallery4Src">Gallery 4 image</option>
+                <option value="gallery5Src">Gallery 5 image</option>
+                <option value="gallery6Src">Gallery 6 image</option>
+                <option value="gallery7Src">Gallery 7 image</option>
+              </select></label>
+              <div style="display: flex; align-items: center; gap: 0.75rem; grid-column: 1 / -1;">
+                <button type="button" id="uploadMediaButton" class="secondary">Upload Selected File</button>
+              </div>
+            </div>
+
+            <div class="section-header">Newsletter</div>
+            <div class="field-grid">
+              <label>Signup Title<input type="text" name="signupTitle"></label>
+              <label class="two-col" style="grid-column: 1 / -1;">Signup Description<textarea name="signupDescription"></textarea></label>
+              <label>Success Message<input type="text" name="signupSuccess"></label>
+            </div>
+
+            <div class="section-header">About</div>
+            <div class="field-grid">
+              <label>About Title<input type="text" name="aboutTitle"></label>
+              <label class="two-col" style="grid-column: 1 / -1;">About Description<textarea name="aboutDescription"></textarea></label>
+            </div>
+
+            <div class="section-header">Gallery</div>
+            <div class="field-grid">
+              <label>Gallery Title<input type="text" name="galleryTitle"></label>
+              <label class="two-col" style="grid-column: 1 / -1;">Gallery Description<textarea name="galleryDescription"></textarea></label>
+            </div>
+
+            <div class="section-header">FAQ</div>
+            <div class="field-grid">
+              <label>FAQ Title<input type="text" name="faqTitle"></label>
+              <label class="two-col" style="grid-column: 1 / -1;">FAQ Intro<textarea name="faqIntro"></textarea></label>
+              <label>FAQ 1 Question<input type="text" name="faq1Question"></label>
+              <label>FAQ 1 Answer<textarea name="faq1Answer"></textarea></label>
+              <label>FAQ 2 Question<input type="text" name="faq2Question"></label>
+              <label>FAQ 2 Answer<textarea name="faq2Answer"></textarea></label>
+              <label>FAQ 3 Question<input type="text" name="faq3Question"></label>
+              <label>FAQ 3 Answer<textarea name="faq3Answer"></textarea></label>
+              <label>FAQ 4 Question<input type="text" name="faq4Question"></label>
+              <label>FAQ 4 Answer<textarea name="faq4Answer"></textarea></label>
+              <label>FAQ 5 Question<input type="text" name="faq5Question"></label>
+              <label>FAQ 5 Answer<textarea name="faq5Answer"></textarea></label>
+            </div>
+
+            <div class="section-header">Contact</div>
+            <div class="field-grid">
+              <label>Contact Title<input type="text" name="contactTitle"></label>
+              <label class="two-col" style="grid-column: 1 / -1;">Contact Description<textarea name="contactDescription"></textarea></label>
+              <label>Email<input type="text" name="email"></label>
+              <label>Phone<input type="text" name="phone"></label>
+              <label>Home Court<input type="text" name="homeCourt"></label>
+              <label>Practice Info<input type="text" name="practice"></label>
+              <label>Social 1 Label<input type="text" name="social1Label"></label>
+              <label>Social 1 URL<input type="text" name="social1Url"></label>
+              <label>Social 2 Label<input type="text" name="social2Label"></label>
+              <label>Social 2 URL<input type="text" name="social2Url"></label>
+              <label>Social 3 Label<input type="text" name="social3Label"></label>
+              <label>Social 3 URL<input type="text" name="social3Url"></label>
+            </div>
+
+            <div class="section-header">Footer</div>
+            <div class="field-grid">
+              <label>Footer Name<input type="text" name="footerName"></label>
+              <label class="two-col" style="grid-column: 1 / -1;">Footer Copy<textarea name="footerCopy"></textarea></label>
+            </div>
+
+            <div class="section-header">Player Cards</div>
+            <div class="field-grid">
+              <label>Player 1 Name<input type="text" name="player1Name"></label>
+              <label>Player 1 Role<input type="text" name="player1Role"></label>
+              <label>Player 1 Photo URL<input type="text" name="player1Photo"></label>
+              <label style="grid-column: 1 / -1;">Player 1 Bio<textarea name="player1Bio"></textarea></label>
+
+              <label>Player 2 Name<input type="text" name="player2Name"></label>
+              <label>Player 2 Role<input type="text" name="player2Role"></label>
+              <label>Player 2 Photo URL<input type="text" name="player2Photo"></label>
+              <label style="grid-column: 1 / -1;">Player 2 Bio<textarea name="player2Bio"></textarea></label>
+
+              <label>Player 3 Name<input type="text" name="player3Name"></label>
+              <label>Player 3 Role<input type="text" name="player3Role"></label>
+              <label>Player 3 Photo URL<input type="text" name="player3Photo"></label>
+              <label style="grid-column: 1 / -1;">Player 3 Bio<textarea name="player3Bio"></textarea></label>
+
+              <label>Player 4 Name<input type="text" name="player4Name"></label>
+              <label>Player 4 Role<input type="text" name="player4Role"></label>
+              <label>Player 4 Photo URL<input type="text" name="player4Photo"></label>
+              <label style="grid-column: 1 / -1;">Player 4 Bio<textarea name="player4Bio"></textarea></label>
+
+              <label>Player 5 Name<input type="text" name="player5Name"></label>
+              <label>Player 5 Role<input type="text" name="player5Role"></label>
+              <label>Player 5 Photo URL<input type="text" name="player5Photo"></label>
+              <label style="grid-column: 1 / -1;">Player 5 Bio<textarea name="player5Bio"></textarea></label>
+
+              <label>Player 6 Name<input type="text" name="player6Name"></label>
+              <label>Player 6 Role<input type="text" name="player6Role"></label>
+              <label>Player 6 Photo URL<input type="text" name="player6Photo"></label>
+              <label style="grid-column: 1 / -1;">Player 6 Bio<textarea name="player6Bio"></textarea></label>
+            </div>
+
+            <div class="section-header">Gallery Images</div>
+            <div class="field-grid">
+              <label>Gallery 1 Image URL<input type="text" name="gallery1Src"></label>
+              <label>Gallery 1 Alt Text<input type="text" name="gallery1Alt"></label>
+              <label>Gallery 2 Image URL<input type="text" name="gallery2Src"></label>
+              <label>Gallery 2 Alt Text<input type="text" name="gallery2Alt"></label>
+              <label>Gallery 3 Image URL<input type="text" name="gallery3Src"></label>
+              <label>Gallery 3 Alt Text<input type="text" name="gallery3Alt"></label>
+              <label>Gallery 4 Image URL<input type="text" name="gallery4Src"></label>
+              <label>Gallery 4 Alt Text<input type="text" name="gallery4Alt"></label>
+              <label>Gallery 5 Image URL<input type="text" name="gallery5Src"></label>
+              <label>Gallery 5 Alt Text<input type="text" name="gallery5Alt"></label>
+              <label>Gallery 6 Image URL<input type="text" name="gallery6Src"></label>
+              <label>Gallery 6 Alt Text<input type="text" name="gallery6Alt"></label>
+              <label>Gallery 7 Image URL<input type="text" name="gallery7Src"></label>
+              <label>Gallery 7 Alt Text<input type="text" name="gallery7Alt"></label>
+            </div>
+
+            <div class="inline-row">
+              <button type="submit" class="primary">Publish</button>
+              <a href="../" class="secondary" style="display: inline-block; text-align: center;">View Site</a>
+            </div>
+            <div id="saveMessage" class="status" aria-live="polite"></div>
+          </form>
+        </div>
       </div>
     </div>
 
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

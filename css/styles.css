@@ -243,11 +243,24 @@ input, textarea { font-family: inherit; font-size: 1rem; }
   padding-top: 80px;
 }
 
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.12;
+  filter: blur(1.5px) saturate(0.8) brightness(0.7);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero-court {
   position: absolute;
   inset: 0;
   opacity: 0.35;
   pointer-events: none;
+  z-index: 1;
 }
 .court-line {
   position: absolute;
@@ -266,7 +279,7 @@ input, textarea { font-family: inherit; font-size: 1rem; }
 
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   text-align: center;
   padding: 2rem 1.5rem;
 }

@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var dataUrl = "content/site.json";
+  var dataUrl = "/api/content";
 
   function setText(selector, value) {
     if (!value) return;
@@ -13,6 +13,17 @@
     if (!value) return;
     var el = document.querySelector(selector);
     if (el) el.placeholder = value;
+  }
+
+  function setHeroVideo(url) {
+    var video = document.getElementById("heroVideo");
+    if (!video) return;
+    if (url) {
+      video.src = url;
+      video.load();
+    } else {
+      video.removeAttribute("src");
+    }
   }
 
   function populateTeamMembers(members) {
@@ -80,6 +91,7 @@
     setText(".hero-title span:first-child", data.heroTitleLine1);
     setText(".hero-title span:last-child", data.heroTitleLine2);
     setText(".hero-tagline", data.heroTagline);
+    setHeroVideo(data.heroVideoUrl);
 
     setText(".signup-copy .section-title", data.signupTitle);
     setText(".signup-copy .section-desc", data.signupDescription);
@@ -117,13 +129,13 @@
     populateSocials(data.socials);
   }
 
-  fetch(dataUrl)
+  fetch(dataUrl, { credentials: "same-origin" })
     .then(function (response) {
       if (!response.ok) throw new Error("Unable to load content");
       return response.json();
     })
     .then(applyData)
     .catch(function () {
-      console.warn("Using fallback content. Add /content/site.json to customize the site.");
+      console.warn("Using fallback content. Add the admin content flow to customize the site.");
     });
 })();

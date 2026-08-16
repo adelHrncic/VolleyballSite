@@ -1,0 +1,23 @@
+{
+  "name": "volleyballsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adelHrncic/VolleyballSite.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/adelHrncic/VolleyballSite/issues"
+  },
+  "homepage": "https://github.com/adelHrncic/VolleyballSite#readme",
+  "dependencies": {
+    "@vercel/blob": "^2.8.0",
+    "formidable": "^3.5.4"
+  }
+}
