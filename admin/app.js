@@ -57,18 +57,37 @@
     ]
   };
 
+  function normalizeListItems(items) {
+    if (!Array.isArray(items)) return [];
+    return items.filter(function (item) {
+      if (!item) return false;
+      return Object.keys(item).some(function (key) {
+        return item[key] !== undefined && item[key] !== null && String(item[key]).trim() !== "";
+      });
+    });
+  }
+
+  function normalizeStoredData(data) {
+    var safeData = Object.assign({}, defaultData, data || {});
+    safeData.teamMembers = normalizeListItems(safeData.teamMembers);
+    safeData.galleryImages = normalizeListItems(safeData.galleryImages);
+    safeData.faqItems = normalizeListItems(safeData.faqItems);
+    safeData.socials = Array.isArray(safeData.socials) ? safeData.socials.slice(0, 3) : defaultData.socials;
+    return safeData;
+  }
+
   function getStored() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return Object.assign({}, defaultData);
-      return Object.assign({}, defaultData, JSON.parse(raw));
+      if (!raw) return normalizeStoredData(defaultData);
+      return normalizeStoredData(JSON.parse(raw));
     } catch (error) {
-      return Object.assign({}, defaultData);
+      return normalizeStoredData(defaultData);
     }
   }
 
   function saveStored(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeStoredData(data)));
   }
 
   function isAuthenticated() {
