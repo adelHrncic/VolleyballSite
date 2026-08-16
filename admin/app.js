@@ -85,6 +85,75 @@
     }
   }
 
+  function getListIndexes(form, prefix) {
+    var matches = [];
+    Array.prototype.forEach.call(form.elements, function (field) {
+      if (!field || !field.name || field.name.indexOf(prefix) !== 0) return;
+      var suffix = field.name.slice(prefix.length);
+      var numberMatch = suffix.match(/^(\d+)/);
+      if (!numberMatch) return;
+      matches.push(parseInt(numberMatch[1], 10));
+    });
+    return matches.sort(function (a, b) { return a - b; });
+  }
+
+  function collectNamedList(form, prefix, builder) {
+    var indexes = getListIndexes(form, prefix);
+    if (!indexes.length) return [];
+    return indexes.map(function (index) {
+      return builder(index);
+    }).filter(function (item) {
+      return !!item;
+    });
+  }
+
+  function createListItemMarkup(listName, index) {
+    if (listName === "players") {
+      return [
+        '<label>Player ' + index + ' Name<input type="text" name="player' + index + 'Name"></label>',
+        '<label>Player ' + index + ' Role<input type="text" name="player' + index + 'Role"></label>',
+        '<label>Player ' + index + ' Photo<input type="text" name="player' + index + 'Photo"><input type="file" class="media-upload" accept="image/*" data-target="player' + index + 'Photo"></label>',
+        '<label style="grid-column: 1 / -1;">Player ' + index + ' Bio<textarea name="player' + index + 'Bio"></textarea></label>'
+      ].join('');
+    }
+
+    if (listName === "faq") {
+      return [
+        '<label>FAQ ' + index + ' Question<input type="text" name="faq' + index + 'Question"></label>',
+        '<label>FAQ ' + index + ' Answer<textarea name="faq' + index + 'Answer"></textarea></label>'
+      ].join('');
+    }
+
+    return [
+      '<label>Gallery ' + index + ' Image<input type="text" name="gallery' + index + 'Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery' + index + 'Src"></label>',
+      '<label>Gallery ' + index + ' Alt Text<input type="text" name="gallery' + index + 'Alt"></label>'
+    ].join('');
+  }
+
+  function appendListItem(button) {
+    var listName = button.dataset.list;
+    var container = document.querySelector('[data-list-container="' + listName + '"]');
+    if (!container) return;
+
+    var prefix = listName === "players" ? "player" : listName === "faq" ? "faq" : "gallery";
+    var indexes = getListIndexes(document.getElementById("editorForm"), prefix);
+    var nextIndex = indexes.length ? Math.max.apply(null, indexes) + 1 : 1;
+    container.insertAdjacentHTML("beforeend", createListItemMarkup(listName, nextIndex));
+    bindMediaUploads();
+  }
+
+  function removeLastListItem(button) {
+    var listName = button.dataset.list;
+    var container = document.querySelector('[data-list-container="' + listName + '"]');
+    if (!container) return;
+    var count = listName === "players" ? 4 : 2;
+    for (var i = 0; i < count; i += 1) {
+      var lastChild = container.lastElementChild;
+      if (!lastChild) break;
+      container.removeChild(lastChild);
+    }
+  }
+
   function readForm(form) {
     var data = getStored();
     var entries = new FormData(form);
@@ -119,32 +188,39 @@
       { label: entries.get("social3Label") || "[ TikTok ]", url: entries.get("social3Url") || "#" }
     ];
 
-    data.teamMembers = [
-      { name: entries.get("player1Name") || "[ Player Name ]", role: entries.get("player1Role") || "[ Position / No. ]", bio: entries.get("player1Bio") || "[ Mini bio placeholder text goes here. ]", photo: entries.get("player1Photo") || "img/volleyball.png" },
-      { name: entries.get("player2Name") || "[ Player Name ]", role: entries.get("player2Role") || "[ Position / No. ]", bio: entries.get("player2Bio") || "[ Mini bio placeholder text goes here. ]", photo: entries.get("player2Photo") || "img/volleyball.png" },
-      { name: entries.get("player3Name") || "[ Player Name ]", role: entries.get("player3Role") || "[ Position / No. ]", bio: entries.get("player3Bio") || "[ Mini bio placeholder text goes here. ]", photo: entries.get("player3Photo") || "img/volleyball.png" },
-      { name: entries.get("player4Name") || "[ Player Name ]", role: entries.get("player4Role") || "[ Position / No. ]", bio: entries.get("player4Bio") || "[ Mini bio placeholder text goes here. ]", photo: entries.get("player4Photo") || "img/volleyball.png" },
-      { name: entries.get("player5Name") || "[ Player Name ]", role: entries.get("player5Role") || "[ Position / No. ]", bio: entries.get("player5Bio") || "[ Mini bio placeholder text goes here. ]", photo: entries.get("player5Photo") || "img/volleyball.png" },
-      { name: entries.get("player6Name") || "[ Player Name ]", role: entries.get("player6Role") || "[ Position / No. ]", bio: entries.get("player6Bio") || "[ Mini bio placeholder text goes here. ]", photo: entries.get("player6Photo") || "img/volleyball.png" }
-    ];
+    data.teamMembers = collectNamedList(form, "player", function (index) {
+      var name = entries.get("player" + index + "Name");
+      var role = entries.get("player" + index + "Role");
+      var bio = entries.get("player" + index + "Bio");
+      var photo = entries.get("player" + index + "Photo");
+      if (!name && !role && !bio && !photo) return null;
+      return {
+        name: name || "[ Player Name ]",
+        role: role || "[ Position / No. ]",
+        bio: bio || "[ Mini bio placeholder text goes here. ]",
+        photo: photo || "img/volleyball.png"
+      };
+    });
 
-    data.galleryImages = [
-      { src: entries.get("gallery1Src") || "img/volleyball.png", alt: entries.get("gallery1Alt") || "[ Image ]" },
-      { src: entries.get("gallery2Src") || "img/volleyball.png", alt: entries.get("gallery2Alt") || "[ Image ]" },
-      { src: entries.get("gallery3Src") || "img/volleyball.png", alt: entries.get("gallery3Alt") || "[ Image ]" },
-      { src: entries.get("gallery4Src") || "img/volleyball.png", alt: entries.get("gallery4Alt") || "[ Image ]" },
-      { src: entries.get("gallery5Src") || "img/volleyball.png", alt: entries.get("gallery5Alt") || "[ Image ]" },
-      { src: entries.get("gallery6Src") || "img/volleyball.png", alt: entries.get("gallery6Alt") || "[ Image ]" },
-      { src: entries.get("gallery7Src") || "img/volleyball.png", alt: entries.get("gallery7Alt") || "[ Image ]" }
-    ];
+    data.galleryImages = collectNamedList(form, "gallery", function (index) {
+      var src = entries.get("gallery" + index + "Src");
+      var alt = entries.get("gallery" + index + "Alt");
+      if (!src && !alt) return null;
+      return {
+        src: src || "img/volleyball.png",
+        alt: alt || "[ Image ]"
+      };
+    });
 
-    data.faqItems = [
-      { question: entries.get("faq1Question") || "[ Question placeholder one? ]", answer: entries.get("faq1Answer") || "[ Answer placeholder text goes here. ]" },
-      { question: entries.get("faq2Question") || "[ Question placeholder two? ]", answer: entries.get("faq2Answer") || "[ Answer placeholder text goes here. ]" },
-      { question: entries.get("faq3Question") || "[ Question placeholder three? ]", answer: entries.get("faq3Answer") || "[ Answer placeholder text goes here. ]" },
-      { question: entries.get("faq4Question") || "[ Question placeholder four? ]", answer: entries.get("faq4Answer") || "[ Answer placeholder text goes here. ]" },
-      { question: entries.get("faq5Question") || "[ Question placeholder five? ]", answer: entries.get("faq5Answer") || "[ Answer placeholder text goes here. ]" }
-    ];
+    data.faqItems = collectNamedList(form, "faq", function (index) {
+      var question = entries.get("faq" + index + "Question");
+      var answer = entries.get("faq" + index + "Answer");
+      if (!question && !answer) return null;
+      return {
+        question: question || "[ Question placeholder ]",
+        answer: answer || "[ Answer placeholder text goes here. ]"
+      };
+    });
 
     return data;
   }
@@ -226,19 +302,16 @@
     return fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
   }
 
-  async function uploadMedia() {
-    var fileInput = document.getElementById("mediaUpload");
-    var targetField = document.getElementById("mediaTarget");
+  async function uploadMediaFile(file, targetName) {
     var status = document.getElementById("saveMessage");
-
-    if (!fileInput || !fileInput.files.length) {
+    if (!file) {
       status.textContent = "Choose a file first.";
       status.classList.add("error");
       return;
     }
 
     var formData = new FormData();
-    formData.append("file", fileInput.files[0]);
+    formData.append("file", file);
 
     status.textContent = "Uploading...";
     status.classList.remove("error");
@@ -254,17 +327,26 @@
         throw new Error(result.error || "Upload failed.");
       }
 
-      var targetFieldEl = document.querySelector('[name="' + targetField.value + '"]');
-      if (targetFieldEl) {
-        targetFieldEl.value = result.url;
+      var targetField = document.querySelector('[name="' + targetName + '"]');
+      if (targetField) {
+        targetField.value = result.url;
       }
 
-      status.textContent = "Uploaded successfully. The media URL has been inserted in the selected field.";
-      fileInput.value = "";
+      status.textContent = "Uploaded successfully.";
     } catch (error) {
       status.textContent = error.message || "Upload failed.";
       status.classList.add("error");
     }
+  }
+
+  function bindMediaUploads() {
+    var uploads = document.querySelectorAll(".media-upload");
+    uploads.forEach(function (input) {
+      input.onchange = function () {
+        if (!input.files || !input.files.length) return;
+        uploadMediaFile(input.files[0], input.dataset.target);
+      };
+    });
   }
 
   async function publishChanges(form) {
@@ -306,6 +388,7 @@
 
       message.textContent = "";
       hydrateForm(document.getElementById("editorForm"), getStored());
+      bindMediaUploads();
       showEditor();
     } catch (error) {
       message.textContent = error.message || "Incorrect username or password.";
@@ -328,11 +411,11 @@
   function init() {
     var loginForm = document.getElementById("loginForm");
     var editorForm = document.getElementById("editorForm");
-    var uploadButton = document.getElementById("uploadMediaButton");
     var logoutButton = document.getElementById("logoutButton");
 
     if (isAuthenticated()) {
       hydrateForm(editorForm, getStored());
+      bindMediaUploads();
       showEditor();
     } else {
       showLogin();
@@ -348,7 +431,18 @@
       });
     });
 
-    uploadButton.addEventListener("click", uploadMedia);
+    document.querySelectorAll(".add-list-item").forEach(function (button) {
+      button.addEventListener("click", function () {
+        appendListItem(button);
+      });
+    });
+
+    document.querySelectorAll(".remove-list-item").forEach(function (button) {
+      button.addEventListener("click", function () {
+        removeLastListItem(button);
+      });
+    });
+
     logoutButton.addEventListener("click", handleLogout);
   }
 

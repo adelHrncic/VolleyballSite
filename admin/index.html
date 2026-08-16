@@ -161,6 +161,28 @@
         text-transform: uppercase;
         color: var(--muted);
       }
+      .editor-welcome {
+        display: grid;
+        gap: 1rem;
+        padding: 1rem 1.1rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--line);
+        background: rgba(61, 91, 255, 0.08);
+      }
+      .editor-welcome h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .quick-tips {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.75rem;
+        margin: 0;
+        padding-left: 1.25rem;
+        color: var(--muted);
+      }
       .field-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -204,8 +226,16 @@
 
         <div id="editorView" class="editor-box" hidden>
           <h1>Content Editor</h1>
-          <p class="muted">Update the site text, image URLs, and background video. Save changes and refresh the homepage to preview them.</p>
-
+          <div class="editor-welcome">
+            <h2>Quick start</h2>
+            <ul class="quick-tips">
+              <li>Fill in your team details and contact info</li>
+              <li>Upload photos directly from your device</li>
+              <li>Use Add buttons for extra players, gallery images, and FAQs</li>
+            </ul>
+          </div>
+          <p class="muted">Everything is designed to be simple for a client: update the text, upload media, and publish when you are happy with the page.</p>
+ 
           <form id="editorForm">
             <div class="section-header">Header</div>
             <div class="field-grid">
@@ -215,26 +245,7 @@
               <label>Hero Title Line 2<input type="text" name="heroTitleLine2"></label>
               <label class="two-col" style="grid-column: 1 / -1;">Hero Tagline<textarea name="heroTagline"></textarea></label>
               <label style="grid-column: 1 / -1;">Background Video URL <small style="letter-spacing: normal; text-transform: none; color: var(--muted);">Use a small MP4 URL or a direct file link for a faint, looping background clip.</small><input type="text" name="heroVideoUrl" placeholder="https://example.com/video.mp4"></label>
-              <label>Upload media to selected field<input id="mediaUpload" type="file" accept="image/*,video/*"></label>
-              <label>Upload target<select id="mediaTarget">
-                <option value="heroVideoUrl">Hero video</option>
-                <option value="player1Photo">Player 1 photo</option>
-                <option value="player2Photo">Player 2 photo</option>
-                <option value="player3Photo">Player 3 photo</option>
-                <option value="player4Photo">Player 4 photo</option>
-                <option value="player5Photo">Player 5 photo</option>
-                <option value="player6Photo">Player 6 photo</option>
-                <option value="gallery1Src">Gallery 1 image</option>
-                <option value="gallery2Src">Gallery 2 image</option>
-                <option value="gallery3Src">Gallery 3 image</option>
-                <option value="gallery4Src">Gallery 4 image</option>
-                <option value="gallery5Src">Gallery 5 image</option>
-                <option value="gallery6Src">Gallery 6 image</option>
-                <option value="gallery7Src">Gallery 7 image</option>
-              </select></label>
-              <div style="display: flex; align-items: center; gap: 0.75rem; grid-column: 1 / -1;">
-                <button type="button" id="uploadMediaButton" class="secondary">Upload Selected File</button>
-              </div>
+              <label style="grid-column: 1 / -1;">Browse video file<input type="file" class="media-upload" accept="video/*" data-target="heroVideoUrl"></label>
             </div>
 
             <div class="section-header">Newsletter</div>
@@ -257,7 +268,11 @@
             </div>
 
             <div class="section-header">FAQ</div>
-            <div class="field-grid">
+            <div class="inline-row" style="margin-bottom: 1rem;">
+              <button type="button" class="secondary add-list-item" data-list="faq">Add Another FAQ</button>
+              <button type="button" class="secondary remove-list-item" data-list="faq">Remove Last FAQ</button>
+            </div>
+            <div class="field-grid" data-list-container="faq">
               <label>FAQ Title<input type="text" name="faqTitle"></label>
               <label class="two-col" style="grid-column: 1 / -1;">FAQ Intro<textarea name="faqIntro"></textarea></label>
               <label>FAQ 1 Question<input type="text" name="faq1Question"></label>
@@ -295,59 +310,67 @@
             </div>
 
             <div class="section-header">Player Cards</div>
-            <div class="field-grid">
+            <div class="inline-row" style="margin-bottom: 1rem;">
+              <button type="button" class="secondary add-list-item" data-list="players">Add Another Player</button>
+              <button type="button" class="secondary remove-list-item" data-list="players">Remove Last Player</button>
+            </div>
+            <div class="field-grid" data-list-container="players">
               <label>Player 1 Name<input type="text" name="player1Name"></label>
               <label>Player 1 Role<input type="text" name="player1Role"></label>
-              <label>Player 1 Photo URL<input type="text" name="player1Photo"></label>
+              <label>Player 1 Photo<input type="text" name="player1Photo"><input type="file" class="media-upload" accept="image/*" data-target="player1Photo"></label>
               <label style="grid-column: 1 / -1;">Player 1 Bio<textarea name="player1Bio"></textarea></label>
 
               <label>Player 2 Name<input type="text" name="player2Name"></label>
               <label>Player 2 Role<input type="text" name="player2Role"></label>
-              <label>Player 2 Photo URL<input type="text" name="player2Photo"></label>
+              <label>Player 2 Photo<input type="text" name="player2Photo"><input type="file" class="media-upload" accept="image/*" data-target="player2Photo"></label>
               <label style="grid-column: 1 / -1;">Player 2 Bio<textarea name="player2Bio"></textarea></label>
 
               <label>Player 3 Name<input type="text" name="player3Name"></label>
               <label>Player 3 Role<input type="text" name="player3Role"></label>
-              <label>Player 3 Photo URL<input type="text" name="player3Photo"></label>
+              <label>Player 3 Photo<input type="text" name="player3Photo"><input type="file" class="media-upload" accept="image/*" data-target="player3Photo"></label>
               <label style="grid-column: 1 / -1;">Player 3 Bio<textarea name="player3Bio"></textarea></label>
 
               <label>Player 4 Name<input type="text" name="player4Name"></label>
               <label>Player 4 Role<input type="text" name="player4Role"></label>
-              <label>Player 4 Photo URL<input type="text" name="player4Photo"></label>
+              <label>Player 4 Photo<input type="text" name="player4Photo"><input type="file" class="media-upload" accept="image/*" data-target="player4Photo"></label>
               <label style="grid-column: 1 / -1;">Player 4 Bio<textarea name="player4Bio"></textarea></label>
 
               <label>Player 5 Name<input type="text" name="player5Name"></label>
               <label>Player 5 Role<input type="text" name="player5Role"></label>
-              <label>Player 5 Photo URL<input type="text" name="player5Photo"></label>
+              <label>Player 5 Photo<input type="text" name="player5Photo"><input type="file" class="media-upload" accept="image/*" data-target="player5Photo"></label>
               <label style="grid-column: 1 / -1;">Player 5 Bio<textarea name="player5Bio"></textarea></label>
 
               <label>Player 6 Name<input type="text" name="player6Name"></label>
               <label>Player 6 Role<input type="text" name="player6Role"></label>
-              <label>Player 6 Photo URL<input type="text" name="player6Photo"></label>
+              <label>Player 6 Photo<input type="text" name="player6Photo"><input type="file" class="media-upload" accept="image/*" data-target="player6Photo"></label>
               <label style="grid-column: 1 / -1;">Player 6 Bio<textarea name="player6Bio"></textarea></label>
             </div>
 
             <div class="section-header">Gallery Images</div>
-            <div class="field-grid">
-              <label>Gallery 1 Image URL<input type="text" name="gallery1Src"></label>
+            <div class="inline-row" style="margin-bottom: 1rem;">
+              <button type="button" class="secondary add-list-item" data-list="gallery">Add Another Photo</button>
+              <button type="button" class="secondary remove-list-item" data-list="gallery">Remove Last Photo</button>
+            </div>
+            <div class="field-grid" data-list-container="gallery">
+              <label>Gallery 1 Image<input type="text" name="gallery1Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery1Src"></label>
               <label>Gallery 1 Alt Text<input type="text" name="gallery1Alt"></label>
-              <label>Gallery 2 Image URL<input type="text" name="gallery2Src"></label>
+              <label>Gallery 2 Image<input type="text" name="gallery2Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery2Src"></label>
               <label>Gallery 2 Alt Text<input type="text" name="gallery2Alt"></label>
-              <label>Gallery 3 Image URL<input type="text" name="gallery3Src"></label>
+              <label>Gallery 3 Image<input type="text" name="gallery3Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery3Src"></label>
               <label>Gallery 3 Alt Text<input type="text" name="gallery3Alt"></label>
-              <label>Gallery 4 Image URL<input type="text" name="gallery4Src"></label>
+              <label>Gallery 4 Image<input type="text" name="gallery4Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery4Src"></label>
               <label>Gallery 4 Alt Text<input type="text" name="gallery4Alt"></label>
-              <label>Gallery 5 Image URL<input type="text" name="gallery5Src"></label>
+              <label>Gallery 5 Image<input type="text" name="gallery5Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery5Src"></label>
               <label>Gallery 5 Alt Text<input type="text" name="gallery5Alt"></label>
-              <label>Gallery 6 Image URL<input type="text" name="gallery6Src"></label>
+              <label>Gallery 6 Image<input type="text" name="gallery6Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery6Src"></label>
               <label>Gallery 6 Alt Text<input type="text" name="gallery6Alt"></label>
-              <label>Gallery 7 Image URL<input type="text" name="gallery7Src"></label>
+              <label>Gallery 7 Image<input type="text" name="gallery7Src"><input type="file" class="media-upload" accept="image/*" data-target="gallery7Src"></label>
               <label>Gallery 7 Alt Text<input type="text" name="gallery7Alt"></label>
             </div>
 
             <div class="inline-row">
-              <button type="submit" class="primary">Publish</button>
-              <a href="../" class="secondary" style="display: inline-block; text-align: center;">View Site</a>
+              <button type="submit" class="primary">Save Changes</button>
+              <a href="../" class="secondary" style="display: inline-block; text-align: center;">Preview Site</a>
             </div>
             <div id="saveMessage" class="status" aria-live="polite"></div>
           </form>
