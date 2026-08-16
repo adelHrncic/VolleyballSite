@@ -34,11 +34,19 @@ module.exports = async function (req, res) {
       return res.status(400).json({ ok: false, error: 'No file was uploaded.' });
     }
 
-    const buffer = fs.readFileSync(file.filepath);
-    const fileName = 'uploads/' + Date.now() + '-' + (file.originalFilename || 'upload');
+    const filePath = file.filepath || file.path;
+    if (!filePath) {
+      return res.status(400).json({
+        ok: false,
+        error: 'Uploaded file is missing its temporary path. Please try again.'
+      });
+    }
+
+    const buffer = fs.readFileSync(filePath);
+    const fileName = 'uploads/' + Date.now() + '-' + (file.originalFilename || file.name || 'upload');
     const blob = await put(fileName, buffer, {
       access: 'public',
-      contentType: file.mimetype || 'application/octet-stream'
+      contentType: file.mimetype || file.type || 'application/octet-stream'
     });
 
     return res.status(200).json({ ok: true, url: blob.url });
