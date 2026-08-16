@@ -92,7 +92,10 @@
       var suffix = field.name.slice(prefix.length);
       var numberMatch = suffix.match(/^(\d+)/);
       if (!numberMatch) return;
-      matches.push(parseInt(numberMatch[1], 10));
+      var index = parseInt(numberMatch[1], 10);
+      if (matches.indexOf(index) === -1) {
+        matches.push(index);
+      }
     });
     return matches.sort(function (a, b) { return a - b; });
   }
